@@ -1,0 +1,14 @@
+{
+  "name": "wayne-tw-tools",
+  "description": "Taiwan-market tooling for Claude Code.",
+  "owner": {
+    "name": "Wayne SHC"
+  },
+  "plugins": [
+    {
+      "name": "fetch-tw-earnings-call",
+      "source": "./",
+      "description": "Download TW earnings-call 簡報 / transcript (中文 + 英文) by stock id, via authoritative IR sources (bypasses MOPS anti-crawling)."
+    }
+  ]
+}

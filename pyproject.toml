@@ -1,0 +1,14 @@
+[project]
+name = "fetch-tw-earnings-call"
+version = "0.1.0"
+description = "Download Taiwan-listed companies' earnings-call presentations & transcripts (zh/en) by stock id."
+requires-python = ">=3.10"
+
+[dependency-groups]
+dev = ["pytest>=8.2", "ruff>=0.5"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
