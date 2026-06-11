@@ -1,9 +1,11 @@
 {
   "name": "fetch-tw-earnings-call",
-  "description": "Download Taiwan-listed companies' earnings-call (法說會) presentations and transcripts (Chinese + English) by stock id. Bypasses 公開資訊觀測站 (MOPS) anti-crawling by hitting authoritative IR sources directly, then merging and md5-deduping across sources.",
+  "description": "Download Taiwan-listed companies' earnings-call (法說會) presentations and transcripts (Chinese + English) by stock id. Fetches directly from authoritative sources — company IR sites and the 公開資訊觀測站 (MOPS) public listing endpoint — then merges and md5-dedupes across sources. Free for noncommercial use (PolyForm Noncommercial 1.0.0); commercial use requires a paid license (see COMMERCIAL-LICENSE.md).",
   "version": "0.1.0",
   "author": {
-    "name": "Wayne SHC"
+    "name": "Wayne SHC",
+    "email": "waynehuichi@gmail.com"
   },
+  "license": "PolyForm-Noncommercial-1.0.0",
   "keywords": ["taiwan", "earnings-call", "法說會", "investor-relations", "mops", "twse"]
 }

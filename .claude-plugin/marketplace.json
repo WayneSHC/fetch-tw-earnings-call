@@ -8,7 +8,7 @@
     {
       "name": "fetch-tw-earnings-call",
       "source": "./",
-      "description": "Download TW earnings-call 簡報 / transcript (中文 + 英文) by stock id, via authoritative IR sources (bypasses MOPS anti-crawling)."
+      "description": "Download TW earnings-call 簡報 / transcript (中文 + 英文) by stock id, via authoritative sources (company IR sites + the MOPS public listing endpoint). Noncommercial use free; commercial use requires a paid license."
     }
   ]
 }
