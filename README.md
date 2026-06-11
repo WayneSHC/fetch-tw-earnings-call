@@ -4,10 +4,14 @@ A Claude Code **plugin** that downloads Taiwan-listed companies' earnings-call (
 **presentations** and **transcripts** — Chinese *and* English — by ticker, into
 `data/<ticker>_<name>/` with a provenance `manifest.json`.
 
-It bypasses 公開資訊觀測站 (MOPS) anti-crawling by hitting **authoritative sources** directly:
-a per-vendor IR adapter (richer: zh + en + transcript when published) plus the MOPS
-法人說明會一覽表 as a generic base that works for any ticker. Results are merged by
+It fetches directly from **authoritative sources**: a per-vendor IR adapter (richer:
+zh + en + transcript when published) plus the 公開資訊觀測站 (MOPS) 法人說明會一覽表
+public listing endpoint as a generic base that works for any ticker. Results are merged by
 `(fiscal_period, lang, doc_type)` and md5-deduped across sources.
+
+> **License:** free for noncommercial use under
+> [PolyForm Noncommercial 1.0.0](LICENSE); **commercial use requires a paid
+> license** — see [COMMERCIAL-LICENSE.md](COMMERCIAL-LICENSE.md).
 
 ## Install
 
@@ -59,6 +63,11 @@ adapter module exposing `supports(ticker, registry)` and
 - A dead link doesn't abort the run: failed downloads are warned on stderr and skipped;
   everything else is still written.
 - This plugin only downloads + writes a manifest. Parsing / chunking / embedding is out of scope.
+- The plugin accesses public endpoints and public IR pages only. Downloaded documents
+  remain the property of their issuers; MOPS information is governed by TWSE's
+  information-usage regulations. Comply with each source's terms, keep request rates
+  reasonable, and see [COMMERCIAL-LICENSE.md](COMMERCIAL-LICENSE.md) before any
+  commercial use or redistribution of fetched data.
 - The skill scripts are **stdlib-only** (no third-party runtime deps) and inject `http_get`,
   so the unit tests run against saved HTML fixtures with zero network.
 
@@ -88,3 +97,15 @@ files are maintained per-repo and never synced.
 
 PDFs from different sources for the same call are collapsed to one per
 `(fiscal_period, lang, doc_type)`, preferring the company's own IR copy.
+
+## License
+
+- **Code** — [PolyForm Noncommercial 1.0.0](LICENSE): free for personal, academic,
+  nonprofit, and government use. **Any commercial use** (including internal use inside a
+  for-profit organization) **requires a separate paid license** — see
+  [COMMERCIAL-LICENSE.md](COMMERCIAL-LICENSE.md) or contact <waynehuichi@gmail.com>.
+- **Data** — not covered by any license here. Fetched PDFs belong to their issuers, and
+  MOPS information is governed by TWSE's information-usage regulations
+  (臺灣證券交易所資訊使用管理辦法). You are responsible for complying with each source's
+  terms before storing, reusing, or redistributing fetched data; commercial redistribution
+  of the data may require authorization from TWSE and/or the issuing companies.

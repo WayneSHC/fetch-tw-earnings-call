@@ -3,6 +3,10 @@ name = "fetch-tw-earnings-call"
 version = "0.1.0"
 description = "Download Taiwan-listed companies' earnings-call presentations & transcripts (zh/en) by stock id."
 requires-python = ">=3.10"
+authors = [{ name = "Wayne SHC", email = "waynehuichi@gmail.com" }]
+# PolyForm Noncommercial 1.0.0 — commercial use requires a separate license
+# (COMMERCIAL-LICENSE.md).
+license = { file = "LICENSE" }
 
 [dependency-groups]
 dev = ["pytest>=8.2", "ruff>=0.5"]
