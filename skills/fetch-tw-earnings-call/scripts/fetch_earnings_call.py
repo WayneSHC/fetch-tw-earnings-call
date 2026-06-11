@@ -111,11 +111,12 @@ def resolve_docs(ticker: str, years: list[int]) -> tuple[str, list[Doc]]:
     """跑命中的 vendor adapter + MOPS 底層，回 (company_name, docs)。"""
     info = ec_companies.lookup(ticker)
     docs: list[Doc] = []
-    company = info["name"] if info else ticker
     for ad in ADAPTERS:
         if info and ad.supports(ticker, info):
             docs += ad.fetch(ticker, years, http_get, info)
     docs += ec_mops.fetch(ticker, years, http_get)
+    # 不在 registry 的代號 → 公司名取來源列表所載（MOPS 表有公司名稱欄）
+    company = info["name"] if info else next((d.company for d in docs if d.company), ticker)
     return company, docs
 
 

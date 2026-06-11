@@ -78,6 +78,16 @@ def test_download_blobs_skips_failed_url(capsys):
     assert "bad" in capsys.readouterr().err
 
 
+def test_resolve_docs_takes_company_name_from_mops_when_not_in_registry(monkeypatch):
+    # 6505 不在 registry → 公司名應取 MOPS 列出的「台塑化」而非代號
+    doc = Doc("6505", "台塑化", "presentation", "2024Q1", "zh", "2024-05-08",
+              "source_listing", "u", "p")
+    monkeypatch.setattr(fetch_earnings_call.ec_mops, "fetch", lambda t, y, g: [doc])
+    company, docs = fetch_earnings_call.resolve_docs("6505", [2024])
+    assert company == "台塑化"
+    assert docs == [doc]
+
+
 def test_run_survives_partial_download_failure(tmp_path, monkeypatch):
     # 一條死連結不應讓整批失敗：好檔照寫、manifest 照出。
     docs = [_doc(period="2026Q1", url="good"), _doc(period="2025Q4", url="bad")]
