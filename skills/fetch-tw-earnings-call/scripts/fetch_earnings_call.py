@@ -36,6 +36,17 @@ def http_get(url: str) -> bytes:
         return r.read()
 
 
+def download_blobs(docs: list[Doc], http_get) -> dict[str, bytes]:
+    """逐 URL 下載；單筆失敗只警告略過，不讓整批失敗。"""
+    blobs: dict[str, bytes] = {}
+    for url in sorted({d.source_url for d in docs}):
+        try:
+            blobs[url] = http_get(url)
+        except OSError as e:  # URLError/HTTPError 皆為 OSError 子類
+            print(f"下載失敗，略過 {url}：{e}", file=sys.stderr)
+    return blobs
+
+
 def dedupe_by_content(docs: list[Doc], blobs: dict[str, bytes]) -> list[Doc]:
     """同內容（md5 相同）只留第一筆；blobs 以 source_url 取位元組。"""
     seen: set[str] = set()
@@ -113,7 +124,7 @@ def run(ticker: str, years: list[int], out_dir: Path) -> list[dict]:
     if not docs:
         print(f"查無 {ticker} 的法說會記錄（已試 vendor adapter + MOPS 底層）。", file=sys.stderr)
         return []
-    blobs = {d.source_url: http_get(d.source_url) for d in {d.source_url: d for d in docs}.values()}
+    blobs = download_blobs(docs, http_get)
     # 補 event_date（adapter 來源沒日期者，用 PDF 首頁）
     enriched: list[Doc] = []
     for d in docs:
