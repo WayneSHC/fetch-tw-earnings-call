@@ -70,6 +70,15 @@ uv run pytest -q
 uv run ruff check skills/fetch-tw-earnings-call/scripts/
 ```
 
+### Canonical source & sync
+
+The skill code (scripts + tests + fixtures) is mirrored from the **polaris-desk** repo
+(`.claude/skills/fetch-tw-earnings-call`), which is the canonical copy; its
+`scripts/sync-plugin.sh` pushes changes here and verifies the two stay byte-identical.
+If you fix something in *this* repo first, back-sync it to polaris-desk and re-run that
+script before pushing either repo. `SKILL.md`, `README.md`, and the plugin packaging
+files are maintained per-repo and never synced.
+
 ## How it works (sources)
 
 | Layer | Source | Gives |
